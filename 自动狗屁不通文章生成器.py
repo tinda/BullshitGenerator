@@ -1,54 +1,61 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-import os, re
-import random,readJSON
+import os
+import re
+import random
+import readJSON
 
-data = readJSON.读JSON文件("data.json")
-名人名言 = data["famous"] # a 代表前面垫话，b代表后面垫话
-前面垫话 = data["before"] # 在名人名言前面弄点废话
-后面垫话 = data['after']  # 在名人名言后面弄点废话
-废话 = data['bosh'] # 代表文章主要废话来源
+data = readJSON.讀JSON文件("data.json")
+名人名言 = data["famous"]  # a 代表前面墊話，b代表後面墊話
+前面墊話 = data["before"]  # 在名人名言前面弄點廢話
+後面墊話 = data['after']  # 在名人名言後面弄點廢話
+廢話 = data['bosh']  # 代表文章主要廢話來源
 
-xx = "学生会退会"
+xx = "學生會退會"
 
-重复度 = 2
+重複度 = 2
 
-def 洗牌遍历(列表):
-    global 重复度
-    池 = list(列表) * 重复度
+
+def 洗牌遍歷(列表):
+    global 重複度
+    池 = list(列表) * 重複度
     while True:
         random.shuffle(池)
         for 元素 in 池:
             yield 元素
 
-下一句废话 = 洗牌遍历(废话)
-下一句名人名言 = 洗牌遍历(名人名言)
 
-def 来点名人名言():
+下一句廢話 = 洗牌遍歷(廢話)
+下一句名人名言 = 洗牌遍歷(名人名言)
+
+
+def 來點名人名言():
     global 下一句名人名言
     xx = next(下一句名人名言)
-    xx = xx.replace(  "a",random.choice(前面垫话) )
-    xx = xx.replace(  "b",random.choice(后面垫话) )
+    xx = xx.replace("a", random.choice(前面墊話))
+    xx = xx.replace("b", random.choice(後面墊話))
     return xx
 
+
 def 另起一段():
-    xx = ". "
+    xx = "。 "
     xx += "\r\n"
     xx += "    "
     return xx
 
+
 if __name__ == "__main__":
-    xx = input("请输入文章主题:")
+    xx = input("請輸入文章主題:")
     for x in xx:
         tmp = str()
-        while ( len(tmp) < 6000 ) :
-            分支 = random.randint(0,100)
+        while (len(tmp) < 6000):
+            分支 = random.randint(0, 100)
             if 分支 < 5:
                 tmp += 另起一段()
-            elif 分支 < 20 :
-                tmp += 来点名人名言()
+            elif 分支 < 20:
+                tmp += 來點名人名言()
             else:
-                tmp += next(下一句废话)
-        tmp = tmp.replace("x",xx)
+                tmp += next(下一句廢話)
+        tmp = tmp.replace("x", xx)
         print(tmp)
